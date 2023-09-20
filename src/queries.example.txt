@@ -1,4 +1,4 @@
-For an entire list of data you can use this query:
+-- For an entire list of data you can use this query:
 
 query ExampleQuery {
   reviews {
@@ -8,7 +8,7 @@ query ExampleQuery {
 }
 
 
-For a single data you can use this query:
+-- For a single data you can use this query:
 
 query ExampleQuery($id: ID!) {
   review(id: $id) {
@@ -20,7 +20,7 @@ query ExampleQuery($id: ID!) {
 make sure to declare the variable in Apollo Server to use
 the variable
 
-For nested related data you can use this query:
+-- For nested related data you can use this query:
 
 query ExampleQuery($id: ID!) {
   game(id: $id) {

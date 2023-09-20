@@ -41,4 +41,22 @@ type Query{
     authors: [Author]
     author(id: ID!): Author
 }
+
+# mutation is for creating, updating and deleting data
+type Mutation {
+    addGame(game: AddGameInput!): Game
+    deleteGame(id: ID!): [Game]
+    updateGame(id: ID!, edits: EditGameInput!): Game
+}
+
+# collect the fields into a single object, kinda like a type
+input AddGameInput {
+    title: String!,
+    platform: [String!]!
+}
+
+input EditGameInput {
+    title: String,
+    platform: [String!] # optional, because we don't need to edit the platform if we don't want to
+}
 `;

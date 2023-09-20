@@ -2,6 +2,7 @@ import { ApolloServer, BaseContext } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./schemas/index.ts";
 import { games, reviews, authors } from "./db.ts";
+import { IAddGameInput, IEditGameInput } from "./types/games.ts";
 
 // Resolvers define the technique for fetching the types defined in the
 // schema. This resolver retrieves the data defined in mock data.
@@ -60,6 +61,35 @@ const resolvers = {
     // single game per review
     game: (parent: { game_id: string }) =>
       games.find((game) => game.id === parent.game_id),
+  },
+  Mutation: {
+    addGame: (_: any, args: IAddGameInput) => {
+      let game = {
+        ...args.game,
+        id: Math.floor(Math.random() * 1000).toString(), // find a better aproach
+      };
+
+      games.push(game);
+
+      return game;
+    },
+    updateGame: (_: any, args: IEditGameInput) => {
+      let game = games.find((game) => game.id === args.id);
+
+      if (!game) {
+        throw new Error("Game not found");
+      }
+
+      game = {
+        ...game,
+        ...args.edits,
+      };
+
+      return game;
+    },
+    deleteGame: (_: any, args: { id: string }) => {
+      return games.filter((game) => game.id !== args.id);
+    },
   },
 };
 
